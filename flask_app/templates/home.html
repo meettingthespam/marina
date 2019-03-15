@@ -5,15 +5,17 @@
 
     <div class="container">
         {% if post %}
+         <h1 class="text-center">{{ post.title }}</h1>
+           <hr>
           <img class="img-responsive mx-auto d-block" style="width: 600px; max-width:75%" src="{{ url_for('static', filename='home_photos/' + post.main_photo )}}" alt=""/>
-       <hr>
+            <hr>
 
-        <h1 class="text-center">{{ post.title }}</h1>
         <p class="text-justify">{{ post.content }}</p>
       </div>
         {% else %}
         <div class="container">
-
+        <h1 class="text-center">Artist Home Page Title</h1>
+           <hr>
           <img class="img-responsive mx-auto d-block" style="width: 600px; max-width:75%" src="{{ url_for('static', filename='images/' + 'spider_teeth.jpg' )}}" alt=""/>
        <hr>
         <h1 class="text-center">Artist Home Page Title</h1>
