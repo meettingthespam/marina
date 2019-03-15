@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+
+{% if post %}
+  <h1 class="text-left">{{ post.title }}</h1>
+  <p class="text-muted text-justify">{{ post.content }}</p>
+{% else %}
+  <h1 class="text-left">About</h1>
+  <p class="text-muted text-justify">Ambitioni dedisse scripsisse iudicaretur. 'Cras mattis iudicium purus sit amet fermentum. Donec sed odio operae, eu vulputate felis rhoncus. Praeterea iter est quasdam res quas ex communi. At nos hinc posthac, sitientis piros Afros. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Cras mattis iudicium purus sit amet fermentum.</p>
+
+{% endif %}
+</div>
+
+{% if current_user.is_authenticated %}
+  <div>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('main_bp.update_about_page') }}">Update</a>
+    <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+  </div>
+{% endif %}
+
+
+{% endblock content %}

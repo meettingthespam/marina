@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- using Bootstrap -->
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+
+  <!-- Font awesome 5 for Gliphs -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='testingCSS/main.css')}}">
+
+
+  {% if title %}
+
+      <title>Tattoos by Boat - {{ title }}</title>
+
+  {% else %}
+
+      <title>Tattoos by Boat</title>
+
+  {% endif %}
+
+</head>
+
+  <header class="site-header">
+    <nav class="navbar navbar-expand-sm navbar-dark nav-bar-bg-color fixed-top">
+       <div class="container">
+           <a class="navbar-brand" href="/">
+             <img class="header-image" src="{{ url_for('static', filename='images/boat_drawing_transparent_background.png') }}" alt="">
+           </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+              <div class="navbar-nav mr-auto">
+
+      <!-- ALTER THESE ONCE EVERYTHING IS GOING WELL -->
+                {% if current_user.is_authenticated %}
+
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">How it looks to other people</a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ url_for('main_bp.home') }}">Home</a>
+                        <a class="dropdown-item" href="{{ url_for('blog_bp.blog') }}">Blog</a>
+                        <a class="dropdown-item" href="{{ url_for('portfolio_bp.portfolio') }}">Portfolio</a>
+                        <a class="dropdown-item" href="{{ url_for('gallery_bp.gallery') }}">Gallery</a>
+                        <a class="dropdown-item" href="{{ url_for('main_bp.map') }}">Shop Location</a>
+                        <a class="dropdown-item" href="{{ url_for('main_bp.about') }}">About</a>
+
+                      </div>
+
+                {% else %}
+                <a class="nav-item nav-link" href="{{ url_for('main_bp.home') }}">Home</a>
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My work</a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ url_for('blog_bp.blog') }}">Blog</a>
+                <a class="dropdown-item" href="{{ url_for('portfolio_bp.portfolio') }}">Portfolio</a>
+                <a class="dropdown-item" href="{{ url_for('gallery_bp.gallery') }}">Gallery</a>
+                  </div>
+
+                {% endif %}
+
+            </div>
+
+          <!-- Navbar Right Side -->
+          <div class="navbar-nav">
+            {% if current_user.is_authenticated %}
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Post/Edit</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ url_for('blog_bp.new_blog_post') }}">New Blog</a>
+                        <a class="dropdown-item" href="{{ url_for('portfolio_bp.new_portfolio_post') }}">New Portfolio</a>
+                        <a class="dropdown-item" href="{{ url_for('gallery_bp.new_gallery_post') }}">New Gallery</a>
+
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ url_for('main_bp.update_home_page') }}">Edit Home Page</a>
+                        <a class="dropdown-item" href="{{ url_for('main_bp.update_about_page') }}">Edit About Page</a>
+                        <a class="dropdown-item" href="{{ url_for('users_bp.account') }}">Edit Account</a>
+                    </div>
+              <a class="nav-item nav-link" href="{{ url_for('users_bp.logout') }}">Logout</a>
+
+        <!-- if user is not logged in -->
+            {% else %}
+
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Info</a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{ url_for('main_bp.contact') }}">Contact Us</a>
+            <a class="dropdown-item" href="{{ url_for('main_bp.about') }}">About</a>
+            <a class="dropdown-item" href="{{ url_for('main_bp.map') }}">Shop Location</a>
+                </div>
+
+              <!-- This needs to be Deleted -->
+              <a class ="nav-item nav-link" href="{{ url_for('users_bp.login') }}">Login</a>
+              <a class ="nav-item nav-link" href="{{ url_for('users_bp.register') }}">Regsiter</a>
+            {% endif %}
+
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+
+<!-- POPUPS ONLY FOR LOGGED IN ARTIST TO CONFIRM THAT SOMETHING HAS HAPPENED -->
+  <main role="main" class="container mb-4">
+            <div class="row">
+              <div class="col-md-8">
+                {% with messages = get_flashed_messages(with_categories='true') %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                              {{ message}}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+              </div>
+          </div>
+
+      <div class="container-fluid">
+
+        {% block content %}
+        {% endblock content %}
+
+        {% block home %}
+        {% endblock home %}
+
+        {% block blog %}
+        {% endblock blog %}
+
+        {% block portfolio %}
+        {% endblock portfolio %}
+
+        {% block modal %}
+        {% endblock modal %}
+
+        {% block contact_us %}
+        {% endblock contact_us %}
+
+      </div>
+      <div style="height: 50px"></div>
+  </main>
+<!-- FIX FOOTER -->
+<nav class="navbar fixed-bottom navbar-dark nav-bar-bg-color">
+  <a class="navbar-brand mr-4 " href="#">
+    <i class="fas fa-heart"></i></a>
+
+          {% if title == "About"%}
+             <small class="text-left">Made with <a class="" href="https://phoebx.com" target="_blank"><i class="far fa-heart"></i></a> by <a class="" href="https://github.com/punctuationmarks" target="_blank">punctuationmarks</a></small>
+
+          {% else %}
+          <div class="text-center">
+            <a class="pad" href="https://www.facebook.com/tattoosbyboatdock/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a class="pad" href="https://www.instagram.com/tattoosbyboatdock/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a class="pad" href="https://github.com/punctuationmarks" target="_blank"><i class="fab fa-github"></i></a>
+            <a class="pad" href="{{ url_for('main_bp.contact')}}"><i class="fas fa-mail-bulk"></i></a>
+            <a class="pad" href="{{ url_for('main_bp.map')}}" target="_blank"><i class="far fa-map"></i></a>
+
+          </div>
+
+          {% endif %}
+
+        <a class="navbar-brand text-right" href="#"><i class="fas fa-arrow-circle-up"></i></a>
+    </nav>
+
+
+  <!-- BOOTSTRAP 4 -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</body>
+</html>

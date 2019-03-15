@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h1 class="text-left"><a href="https://www.instagram.com/theartistryrealm/">Artistry Realm</a></h1>
+<p class="text-left">We're located at <a href="https://www.google.com/maps/place/The+Artistry+Realm+Tattoo+%26+Art+Studio/@39.744555,-86.2784177,17z/data=!4m5!3m4!1s0x886ca7c96085f947:0xda7c1b1f0c50030b!8m2!3d39.7443408!4d-86.2762882" target="_blank">6663 W Washington St
+Indianapolis, IN 46241</a></p>
+<p class="text-left">Phone: (317) 220-8790</p>
+<p>Appointments and walk-ins welcomed</p>
+
+{% with %}
+
+    {% set location=(39.744489,-86.275832) %}
+    {% set style="width:500px;height:500px;"%}
+
+    {{
+    googlemap(
+        "simple-map",
+        location.0, location.1,
+        markers=[location,],
+        style=style
+        )
+    }}
+
+{% endwith %}
+
+{% endblock content %}
